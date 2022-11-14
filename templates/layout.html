@@ -18,14 +18,14 @@
   </head>
   <body>
     <nav
-      class="navbar navbar-expand-lg navbar-light fixed-top"
+      class="navbar navbar-light navbar-expand-lg"
       style="background-color: #d1fffc"
     >
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">이고바라</a>
-        <div class="collapse navbar-collapse" id="navbarNav">
+        <a class="navbar-brand">이고바라</a>
+        <div id="navbarNav">
           <ul class="navbar-nav">
-            {% if not loggedIn %}
+            {% if loggedIn %}
             <li class="nav-item">
               <a class="nav-link" href="write">글 작성</a>
             </li>
