@@ -1,1 +1,5 @@
-{% extends "layout.html" %} {% block contents %} {% endblock %}
+{% extends "layout.html" %} {% block contents %}
+<img
+  class="img-fluid"
+  src="{{ url_for('static', filename='images/test.png') }}"
+/>{% endblock %}
