@@ -15,6 +15,7 @@
       crossorigin="anonymous"
     ></script>
     <title>이고바라</title>
+    {% block head %}{% endblock %}
   </head>
   <body>
     <nav
@@ -22,7 +23,7 @@
       style="background-color: #d1fffc"
     >
       <div class="container-fluid">
-        <a class="navbar-brand">이고바라</a>
+        <a class="navbar-brand" href="/">이고바라</a>
         <div id="navbarNav">
           <ul class="navbar-nav">
             {% if loggedIn %}
