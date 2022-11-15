@@ -16,19 +16,21 @@
     <form>
       <input type="text" placeholder="아이디" />
       <input type="password" placeholder="비밀번호" />
-      <button>로그인</button>
+      <button type="button">로그인</button>
     </form>
   </div>
   <div class="form">
     <h2>이고바라에 가입해<br />당신의 순간을 보여주세요.</h2>
     <form>
-      <input type="text" placeholder="아이디" />
-      <button class="check_overlap">중복확인</button>
-      <input type="password" placeholder="비밀번호" />
-      <input type="password_check" placeholder="비밀번호 재확인" />
-      <input type="nickname" placeholder="닉네임" />
-      <button class="check_overlap">중복확인</button>
-      <button>회원가입</button>
+      <i style="display: none;" id="idlap">0</i>
+      <i style="display: none;" id="nicklap">0</i>
+      <input type="text" id="userid" placeholder="아이디" />
+      <button type="button" class="check_overlap" onclick="checkID()" >중복확인</button>
+      <input type="password" placeholder="비밀번호" id="pw" />
+      <input type="password" placeholder="비밀번호 재확인" id="pw_check" />
+      <input type="text" placeholder="닉네임" id="nickname" />
+      <button type="button" class="check_overlap" onclick="checkNick()">중복확인</button>
+      <button type="button" onclick="join()">회원가입</button>
     </form>
   </div>
 </div>

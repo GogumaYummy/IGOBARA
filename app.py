@@ -1,11 +1,14 @@
 from flask import Flask, render_template
+from api import login
 
 app = Flask(__name__)
 
+app.register_blueprint(login.login_api)
 
 @app.route('/')
 def index():
     return render_template('index.html')
+
 
 @app.route('/login')
 def login():
