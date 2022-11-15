@@ -1,6 +1,7 @@
 from flask import request, jsonify, Blueprint
 from pymongo import MongoClient
 import certifi, jwt, datetime, hashlib
+# 여기서 사용한 패키지는 app.py에서 다시 불러올 필요가 없습니다.
 
 ca = certifi.where()
 
@@ -9,9 +10,9 @@ db = client.dbsparta
 
 SECRET_KEY = 'IGO_BARA' #JWT토큰 생성시 필요
 
-login_api = Blueprint("login", __name__, url_prefix="/api")
+login_api = Blueprint("login", __name__, url_prefix="/api") # Blueprint("블루프린트 이름", __name__, url_prefix="/경로")로 새 블루프린트를 만듭니다.
 
-@login_api.route('/idcheck', methods=["POST"]) #아이디 중복 체크
+@login_api.route('/idcheck', methods=["POST"]) # 위에서 /api로 경로를 지정해줬으니 여기서는 /idcheck만 입력해 POST /api/idcheck에 대한 요청을 응답합니다.
 def idcheck():
     id_receive = request.form['id_give']
     user = db.users.find_one({'id': id_receive})
