@@ -1,0 +1,9 @@
+.main-image {
+  width: 50%;
+}
+
+.main-image img {
+  width: 50%;
+  height: 30rem;
+  object-fit: cover;
+}
