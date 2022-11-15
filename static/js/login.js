@@ -23,29 +23,21 @@ let nicklap = 0
 
 //회원가입 버튼 클릭
 function join() {
-  if (idlap != 10) {
-    alert('아이디 중복체크를 진행해주세요.')
-  }
-  else if (nicklap != 10) {
-    alert('닉네임 중복체크를 진행해주세요.')
-  }
-  else {
-    let id = $('#userid').val()
-    let pw = $('#pw').val()
-    let pw_check = $('#pw_check').val()
-    let nick = $('#nickname').val()
+  let id = $('#userid').val()
+  let pw = $('#pw').val()
+  let pw_check = $('#pw_check').val()
+  let nick = $('#nickname').val()
 
-    $.ajax({
-      type: "POST",
-      url: "/api/join",
-      data: { id_give: id, pw_give: pw, pwc_give: pw_check, nick_give: nick },
-      success: function (response) {
-        alert(response['msg'])
+  $.ajax({
+    type: "POST",
+    url: "/api/join",
+    data: { id_give: id, pw_give: pw, pwc_give: pw_check, nick_give: nick },
+    success: function (response) {
+      alert(response['msg'])
 
-        if (response['state'] == 1) window.location.reload()
-      }
-    });
-  }
+      if (response['state'] == 1) window.location.reload()
+    }
+  });
 }
 
 //아이디 중복체크
@@ -58,9 +50,6 @@ function checkID() {
     data: { id_give: id },
     success: function (response) {
       alert(response['msg'])
-      if (response['state'] == 1) {
-        idlap = 10
-      }
     }
   });
 }
@@ -75,24 +64,11 @@ function checkNick() {
     data: { nick_give: nick },
     success: function (response) {
       alert(response['msg'])
-      if (response['state'] == 1) {
-        nicklap = 10
-      }
     }
   });
 }
 
-//중복체크 후, 값이 변경됨을 방지하기 위한 아이디, 닉네임필드 변화 체크
-$( document ).ready( function() {
-  $( '#userid' ).change( function() {
-    if(idlap == 10) idlap = 0
-  } );
-  $( '#nickname' ).change( function() {
-    if(nicklap == 10) nicklap = 0
-  } );
-} );
-
-function login(){
+function login() {
   let id = $('#idInput').val()
   let pw = $('#pwInput').val()
 
@@ -101,13 +77,13 @@ function login(){
     url: "/api/login",
     data: { id_give: id, pw_give: pw },
     success: function (response) {
-      if(response['state'] == 0){
+      if (response['state'] == 0) {
         alert(response['msg'])
         window.location.reload()
       }
-      else{
+      else {
         $.cookie('mytoken', response['token'])
-        location.href= '/'
+        location.href = '/'
       }
     }
   });
