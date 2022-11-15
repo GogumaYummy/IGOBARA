@@ -18,12 +18,15 @@ $(".toggle").click(function () {
   );
 });
 
+let idlap = 0
+let nicklap = 0
+
 //회원가입 버튼 클릭
 function join() {
-  if (document.getElementById('idlap').innerText != 10) {
+  if (idlap != 10) {
     alert('아이디 중복체크를 진행해주세요.')
   }
-  else if (document.getElementById('nicklap').innerText != 10) {
+  else if (nicklap != 10) {
     alert('닉네임 중복체크를 진행해주세요.')
   }
   else {
@@ -56,7 +59,7 @@ function checkID() {
     success: function (response) {
       alert(response['msg'])
       if (response['state'] == 1) {
-        $('#idlap').text(10)
+        idlap = 10
       }
     }
   });
@@ -73,7 +76,7 @@ function checkNick() {
     success: function (response) {
       alert(response['msg'])
       if (response['state'] == 1) {
-        $('#nicklap').text(10)
+        nicklap = 10
       }
     }
   });
@@ -82,10 +85,10 @@ function checkNick() {
 //중복체크 후, 값이 변경됨을 방지하기 위한 아이디, 닉네임필드 변화 체크
 $( document ).ready( function() {
   $( '#userid' ).change( function() {
-    if(document.getElementById('idlap').innerText == 10)$('#idlap').text(0)
+    if(idlap == 10) idlap = 0
   } );
   $( '#nickname' ).change( function() {
-    if(document.getElementById('nicklap').innerText == 10)$('#nicklap').text(0)
+    if(nicklap == 10) nicklap = 0
   } );
 } );
 
