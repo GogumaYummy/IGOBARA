@@ -3,6 +3,7 @@
   <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
   <link href="/static/css/login.css" rel="stylesheet" />
   <script defer src="/static/js/login.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 </head>
 {% endblock %} {% block contents %}
 <div class="pen-title">
@@ -14,9 +15,9 @@
   <div class="form">
     <h2>로그인 정보를 입력하세요.</h2>
     <form>
-      <input type="text" placeholder="아이디" />
-      <input type="password" placeholder="비밀번호" />
-      <button type="button">로그인</button>
+      <input type="text" placeholder="아이디" id="idInput" />
+      <input type="password" placeholder="비밀번호" id="pwInput" />
+      <button type="button" onclick="login()">로그인</button>
     </form>
   </div>
   <div class="form">

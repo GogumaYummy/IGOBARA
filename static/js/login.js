@@ -1,4 +1,5 @@
 // Toggle Function
+//로그인<->회원가입 전환 토글
 $(".toggle").click(function () {
   // Switches the Icon
   $(this).children("i").toggleClass("fa-pencil");
@@ -17,6 +18,7 @@ $(".toggle").click(function () {
   );
 });
 
+//회원가입 버튼 클릭
 function join() {
   if (document.getElementById('idlap').innerText != 10) {
     alert('아이디 중복체크를 진행해주세요.')
@@ -43,6 +45,7 @@ function join() {
   }
 }
 
+//아이디 중복체크
 function checkID() {
   let id = $('#userid').val()
 
@@ -59,6 +62,7 @@ function checkID() {
   });
 }
 
+//닉네임 중복체크
 function checkNick() {
   let nick = $('#nickname').val()
 
@@ -75,6 +79,7 @@ function checkNick() {
   });
 }
 
+//중복체크 후, 값이 변경됨을 방지하기 위한 아이디, 닉네임필드 변화 체크
 $( document ).ready( function() {
   $( '#userid' ).change( function() {
     if(document.getElementById('idlap').innerText == 10)$('#idlap').text(0)
@@ -83,3 +88,24 @@ $( document ).ready( function() {
     if(document.getElementById('nicklap').innerText == 10)$('#nicklap').text(0)
   } );
 } );
+
+function login(){
+  let id = $('#idInput').val()
+  let pw = $('#pwInput').val()
+
+  $.ajax({
+    type: "POST",
+    url: "/api/login",
+    data: { id_give: id, pw_give: pw },
+    success: function (response) {
+      if(response['state'] == 0){
+        alert(response['msg'])
+        window.location.reload()
+      }
+      else{
+        $.cookie('mytoken', response['token'])
+        location.href= '/'
+      }
+    }
+  });
+}
