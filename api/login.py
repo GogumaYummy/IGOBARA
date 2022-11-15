@@ -32,7 +32,7 @@ def join():
     id_receive = request.form['id_give']
     pw_receive = request.form['pw_give']
     pwc_receive = request.form['pwc_give']
-    nick_receive = request.form['nick_give']\
+    nick_receive = request.form['nick_give']
 
     if(len(pw_receive) < 12):
         return jsonify({'msg': '비밀번호는 12자 이상이어야 합니다.', 'state': 0})
