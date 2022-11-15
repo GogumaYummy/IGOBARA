@@ -1,9 +1,5 @@
-<<<<<<< HEAD
-from flask import Flask, render_template, request, jsonify
-=======
 from flask import Flask, render_template
-from api import login # api 폴더의 login.py 파일을 가져옵니다.
->>>>>>> f091ffdd9647e8f720cb814991339573bdb71479
+from api import login
 
 app = Flask(__name__)
 
@@ -23,4 +19,4 @@ def login():
 
 
 if __name__ == '__main__':
-    app.run('0.0.0.0', port=5000, debug=True)
+    app.run('0.0.0.0', port=5001, debug=True)
