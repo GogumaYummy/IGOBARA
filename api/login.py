@@ -40,6 +40,12 @@ def join():
     if(pw_receive != pwc_receive):
         return jsonify({'msg': '비밀번호와 비밀번호 재확인이 일치하지 않습니다.', 'state': 0})
 
+    user = db.users.find_one({'id': id_receive})
+    if(user != None): return jsonify({'msg': '이미 사용 중인 닉네임입니다.', 'state': 0})
+
+    user = db.users.find_one({'nick': nick_receive})
+    if(user != None): return jsonify({'msg': '이미 사용 중인 닉네임입니다.', 'state': 0})
+
     pw_hash = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest()
 
     doc = {
