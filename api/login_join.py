@@ -15,6 +15,9 @@ login_api = Blueprint("login_join", __name__, url_prefix="/api") # Blueprint("�
 @login_api.route('/idcheck', methods=["POST"]) # 위에서 /api로 경로를 지정해줬으니 여기서는 /idcheck만 입력해 POST /api/idcheck에 대한 요청을 응답합니다.
 def idcheck():
     id_receive = request.form['id_give']
+
+    if(id_receive.strip() == ''): return jsonify({'msg': '공백을 아이디로 사용할 수 없습니다.', 'state': 0})
+
     user = db.users.find_one({'id': id_receive})
 
     if(user != None): return jsonify({'msg': '이미 사용 중인 아이디입니다.', 'state': 0})
@@ -23,6 +26,9 @@ def idcheck():
 @login_api.route('/nickcheck', methods=["POST"]) #닉네임 중복 체크
 def nickcheck():
     nick_receive = request.form['nick_give']
+
+    if(nick_receive == ''): return jsonify({'msg': '공백을 닉네임으로 사용할 수 없습니다.', 'state': 0})
+
     user = db.users.find_one({'nick': nick_receive})
     
     if(user != None): return jsonify({'msg': '이미 사용 중인 닉네임입니다.', 'state': 0})
@@ -34,6 +40,9 @@ def join():
     pw_receive = request.form['pw_give']
     pwc_receive = request.form['pwc_give']
     nick_receive = request.form['nick_give']
+    
+    if(id_receive.strip() == ''): return jsonify({'msg': '공백을 아이디로 사용할 수 없습니다.', 'state': 0})
+    if(nick_receive.strip() == ''): return jsonify({'msg': '공백을 닉네임으로 사용할 수 없습니다.', 'state': 0})
 
     if(len(pw_receive) < 12):
         return jsonify({'msg': '비밀번호는 12자 이상이어야 합니다.', 'state': 0})

@@ -14,6 +14,14 @@
       integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
       crossorigin="anonymous"
     ></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <script>
+      function logout(){
+        $.removeCookie('mytoken');
+        window.location.href='/'
+      }
+    </script>
     <title>이고바라</title>
     {% block head %}{% endblock %}
   </head>
@@ -32,7 +40,7 @@
               <a class="nav-link" href="write">글 작성</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="logout">로그아웃</a>
+              <a class="nav-link" href="#" onclick="logout()">로그아웃</a>
             </li>
             {% else %}
             <li class="nav-item">
