@@ -1,10 +1,11 @@
 from flask import Flask, render_template
-from api import login_join # api 폴더의 login.py 파일을 가져옵니다.
+from api import login_join, test # api 폴더의 파일을 가져옵니다.
 from api import post
 
 app = Flask(__name__)
 
 app.register_blueprint(login_join.login_api) # login.py 파일의 login_api 블루프린트를 연결해줍니다.
+app.register_blueprint(test.test_api)
 app.register_blueprint(post.post_api)
 
 def render(template):
