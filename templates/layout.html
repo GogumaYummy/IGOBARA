@@ -34,6 +34,7 @@
         <a class="navbar-brand" href="/">이고바라</a>
         <div id="navbarNav">
           <ul class="navbar-nav">
+            <!-- 로그인 상태일 때 -->
             {% if result == 'success' %}
             <span class="navbar-text mx-4">{{nick}} 님, 환영합니다.</span>
             <li class="nav-item">
@@ -42,6 +43,7 @@
             <li class="nav-item">
               <a class="nav-link" href="#" onclick="logout()">로그아웃</a>
             </li>
+            <!-- 비로그인 상태일 때 -->
             {% else %}
             <li class="nav-item">
               <a class="nav-link" href="/login">로그인</a>
