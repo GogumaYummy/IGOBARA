@@ -39,8 +39,8 @@ def delete(id):
     user_id = user_data['id']
 
     _id = ObjectId(id)
-    article = pymongo.db.articles.find_one({ '_id' : _id }, {"_id": 0, "postepymongo.dby": 1})
-    posted_by = article['postepymongo.dby']
+    article = pymongo.db.articles.find_one({ '_id' : _id }, {"_id": 0, "postedBy": 1})
+    posted_by = article['postedBy']
 
     if (user_id == posted_by):
         pymongo.db.articles.delete_one({"_id" : _id})
@@ -61,7 +61,7 @@ def write():
         'title': title,
         'image': image,
         'content': content,
-        'postepymongo.dby': user_id,
+        'postedBy': user_id,
         'createdAt': datetime.now()
     }
 
@@ -79,8 +79,8 @@ def rewrite(id):
     content = request.form['content_give']
 
     _id = ObjectId(id)
-    article = pymongo.db.articles.find_one({ '_id' : _id }, {"_id": 1, "postepymongo.dby": 1})
-    posted_by = article['postepymongo.dby']
+    article = pymongo.db.articles.find_one({ '_id' : _id }, {"_id": 1, "postedBy": 1})
+    posted_by = article['postedBy']
 
     doc = {
         'title': title,
