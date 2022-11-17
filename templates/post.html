@@ -73,7 +73,7 @@
         const buttons =
           userId === postedBy
             ? `<div class="d-flex justify-content-end">
-            <button type="button" class="btn btn-info fix">수정</button>
+            <button type="button" class="btn btn-info fix" onclick="location.href = '/rewrite/${id}'">수정</button>
             <button
               type="button"
               onclick="delete_post()"
