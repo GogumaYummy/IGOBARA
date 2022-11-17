@@ -170,9 +170,9 @@
 
   function delete_post() {
     $.ajax({
-      type: 'POST',
-      url: '/api/delete',
-      data: { _id: id },
+      type: 'DELETE',
+      url: `/api/article/${id}`,
+      data: {},
       success: function (response) {
         location.href = '/';
       },

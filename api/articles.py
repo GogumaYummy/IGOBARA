@@ -1,6 +1,7 @@
 from flask import request, jsonify, Blueprint
 from pymongo import MongoClient
 from bson.objectid import ObjectId
+from . import login_join
 import certifi
 # 여기서 사용한 패키지는 app.py에서 다시 불러올 필요가 없습니다.
 
@@ -21,8 +22,22 @@ def post(id):
     return jsonify({'result': result })
 
 
-@post_api.route('/delete', methods=["POST"])
-def delete():
-    id = request.form['_id']
-    result = db.post.delete_one({"_id" : id})
-    return jsonify({'msg': '삭제완료'})
+@post_api.route('/article/<id>', methods=["DELETE"])
+def delete(id):
+    user_data = login_join.check_login()
+    user_id = user_data['id']
+
+    print(user_id)
+
+    _id = ObjectId(id)
+    article = db.articles.find_one({ '_id' : _id }, {"_id": 0, "postedBy": 1})
+    posted_by = article['postedBy']
+
+    print(posted_by)
+
+    if (user_id == posted_by):
+        db.articles.delete_one({"_id" : _id})
+        return jsonify({'msg': '삭제완료'})
+    else:
+        print('아이디가 일치하지 않습니다.')
+        return jsonify({'msg': '삭제실패'})
