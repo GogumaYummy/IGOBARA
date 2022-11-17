@@ -28,13 +28,12 @@ def article(id):
     user_info = login_join.check_login()
     result = user_info['result']
     articleId = id
-    print(articleId)
 
     if(user_info['result'] == 'success'):
         userId = user_info['id']
         nick = user_info['nick']
 
-        return render_template('post.html', result = result, userI= userId, nick = nick, articleId = articleId)
+        return render_template('post.html', result = result, userId = userId, nick = nick, articleId = articleId)
     else:
         msg = user_info['msg']
 
