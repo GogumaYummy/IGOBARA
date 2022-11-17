@@ -26,14 +26,3 @@
   object-fit: cover;
   height: 20vh;
 }
-
-.card-button-like {
-  all: unset;
-
-  font-size: 1.5rem;
-}
-
-.card-button-like:hover {
-  color: red;
-  transition: all 0.5s;
-}
