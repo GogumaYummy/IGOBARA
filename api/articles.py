@@ -1,6 +1,7 @@
 from flask import request, jsonify, Blueprint
 from pymongo import MongoClient
 from bson.objectid import ObjectId
+from datetime import datetime
 from . import login_join
 import certifi
 # 여기서 사용한 패키지는 app.py에서 다시 불러올 필요가 없습니다.
@@ -36,3 +37,49 @@ def delete(id):
         return jsonify({'result': 'success', 'msg': '삭제 완료!'})
     else:
         return jsonify({'result': 'fail', 'msg': '삭제 실패! 아이디가 일치하지 않습니다.'})
+
+@post_api.route('/write', methods=["POST"]) #게시글 등록 
+def write():
+    user_data = login_join.check_login()
+    user_id = user_data['id']
+
+    title = request.form['title_give']
+    image = request.form['image_give']
+    content = request.form['content_give']
+
+    doc = {
+        'title': title,
+        'image': image,
+        'content': content,
+        'postedBy': user_id,
+        'createdAt': datetime.now()
+    }
+
+    db.articles.insert_one(doc)
+
+    return jsonify({'msg': '작성 완료!', 'state': 1})
+
+@post_api.route('/article/<id>', methods=["PUT"]) #게시글 등록 
+def rewrite(id):
+    user_data = login_join.check_login()
+    user_id = user_data['id']
+
+    title = request.form['title_give']
+    image = request.form['image_give']
+    content = request.form['content_give']
+
+    _id = ObjectId(id)
+    article = db.articles.find_one({ '_id' : _id }, {"_id": 1, "postedBy": 1})
+    posted_by = article['postedBy']
+
+    doc = {
+        'title': title,
+        'image': image,
+        'content': content
+    }
+
+    if (user_id == posted_by):
+        db.articles.update_one({ '_id': _id }, {'$set': doc})
+        return jsonify({'result': 'success', 'msg': '수정 완료!'})
+    else:
+        return jsonify({'result': 'fail', 'msg': '수정 실패! 아이디가 일치하지 않습니다.'})

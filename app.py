@@ -7,7 +7,6 @@ app.register_blueprint(login_join.login_api) # login.py 파일의 login_api 블�
 app.register_blueprint(test.test_api)
 app.register_blueprint(articles.post_api)
 
-
 @app.route('/')
 def index():
     user_info = login_join.check_login()
@@ -22,6 +21,7 @@ def index():
         msg = user_info['msg']
 
         return render_template('index.html', result = result, msg = msg)
+
 
 @app.route('/article/<id>')
 def article(id):
@@ -39,6 +39,7 @@ def article(id):
 
         return render_template('post.html', result = result, msg = msg, articleId = articleId)
 
+
 @app.route('/login')
 def login():
     user_info = login_join.check_login()
@@ -55,6 +56,37 @@ def login():
         return render_template('login.html', result = result, msg = msg)
 
 
+@app.route('/write')
+def write():
+    user_info = login_join.check_login()
+    result = user_info['result']
+
+    if(user_info['result'] == 'success'):
+        userId = user_info['id']
+        nick = user_info['nick']
+
+        return render_template('write.html', result = result, userId = userId, nick = nick)
+    else:
+        msg = user_info['msg']
+
+        return render_template('write.html', result = result, msg = msg)
+
+
+@app.route('/rewrite/<id>')
+def rewrite(id):
+    articleId = id
+    user_info = login_join.check_login()
+    result = user_info['result']
+
+    if(user_info['result'] == 'success'):
+        userId = user_info['id']
+        nick = user_info['nick']
+
+        return render_template('rewrite.html', result = result, userId = userId, nick = nick, articleId = articleId)
+    else:
+        msg = user_info['msg']
+
+        return render_template('rewrite.html', result = result, msg = msg, articleId = articleId)
 
 
 if __name__ == '__main__':    app.run('0.0.0.0', port=5000, debug=True)

@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request
-import datetime, math
+import math
+from datetime import datetime
 from config import pymongo
 
 test_api = Blueprint("test_api", __name__, url_prefix="/test")
@@ -12,7 +13,7 @@ def create_dummy_articles():
             'title': str(i) + '번째 게시글',
             'content': '내용',
             'image': 'https://cdn.travie.com/news/photo/first/201710/img_19975_1.jpg',
-            'createdAt': datetime.datetime.now()
+            'createdAt': datetime.now()
         }
         pymongo.db.articles.insert_one(doc)
 
