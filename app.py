@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect
 from api import articles, login_join, test # api 폴더의 파일을 가져옵니다.
 
 app = Flask(__name__)
@@ -67,9 +67,7 @@ def write():
 
         return render_template('write.html', result = result, userId = userId, nick = nick)
     else:
-        msg = user_info['msg']
-
-        return render_template('write.html', result = result, msg = msg)
+        return redirect('/')
 
 
 @app.route('/rewrite/<id>')
@@ -84,9 +82,7 @@ def rewrite(id):
 
         return render_template('rewrite.html', result = result, userId = userId, nick = nick, articleId = articleId)
     else:
-        msg = user_info['msg']
-
-        return render_template('rewrite.html', result = result, msg = msg, articleId = articleId)
+        return redirect('/')
 
 
 if __name__ == '__main__':    app.run('0.0.0.0', port=5000, debug=True)
