@@ -3,10 +3,26 @@ from bson.objectid import ObjectId
 from datetime import datetime
 from . import login_join
 from config import pymongo
+import math
 # 여기서 사용한 패키지는 app.py에서 다시 불러올 필요가 없습니다.
 
 post_api = Blueprint("post", __name__, url_prefix="/api")
 
+@post_api.route('/articles')
+def get_articles():
+    page = int(request.args.get('page', default = '0', type = str))
+    max_page = math.ceil(pymongo.db.articles.count_documents({}) / 30)
+
+    articles = list(pymongo.db.articles.find({}, {}).sort("createdAt", -1).skip((page - 1) * 30).limit(30))
+
+    decoded_articles = list()
+    for article in articles:
+        new_article = article
+        new_article['_id'] = str(new_article['_id'])
+        new_article['postedByNick'] = pymongo.db.users.find_one({'id': new_article['postedBy']})['nick']
+        decoded_articles.append(new_article)
+
+    return jsonify({'articles': decoded_articles, 'max_page': max_page})
 
 @post_api.route('/article/<id>')
 def post(id):
