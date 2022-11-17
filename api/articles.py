@@ -27,17 +27,12 @@ def delete(id):
     user_data = login_join.check_login()
     user_id = user_data['id']
 
-    print(user_id)
-
     _id = ObjectId(id)
     article = db.articles.find_one({ '_id' : _id }, {"_id": 0, "postedBy": 1})
     posted_by = article['postedBy']
 
-    print(posted_by)
-
     if (user_id == posted_by):
         db.articles.delete_one({"_id" : _id})
-        return jsonify({'msg': '삭제완료'})
+        return jsonify({'result': 'success', 'msg': '삭제 완료!'})
     else:
-        print('아이디가 일치하지 않습니다.')
-        return jsonify({'msg': '삭제실패'})
+        return jsonify({'result': 'fail', 'msg': '삭제 실패! 아이디가 일치하지 않습니다.'})

@@ -3,61 +3,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Bootstrap demo</title>
 <style>
-  .left-all {
-    padding: 0px;
-    color: white;
-    background-color: black;
-    height: 600px;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .right-all {
-    padding: 0;
-    background-color: green;
-    height: 600px;
-  }
-
-  .title1 {
-    background-color: blue;
-    height: 100px;
-
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .title2 {
-    background-color: yellow;
-    height: 420px;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .title3 {
-    padding: 10px;
-    background-color: red;
-    height: 80px;
-
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: end;
-  }
-
   .btn {
     margin-left: 10px;
-  }
-
-  .titlestr {
-    color: wheat;
   }
 
   #article div img {
@@ -123,8 +70,6 @@
 
         const userId = '{{ userId }}';
 
-        console.log(postedBy, userId);
-
         const buttons =
           userId === postedBy
             ? `<div class="d-flex justify-content-end">
@@ -167,14 +112,23 @@
   }
 
   function delete_post() {
-    $.ajax({
-      type: 'DELETE',
-      url: `/api/article/${id}`,
-      data: {},
-      success: function (response) {
-        location.href = '/';
-      },
-    });
+    if (confirm('삭제하시겠습니까?')) {
+      $.ajax({
+        type: 'DELETE',
+        url: `/api/article/${id}`,
+        data: {},
+        success: function (response) {
+          const { result, msg } = response;
+
+          if (result === 'success') {
+            alert(msg);
+            location.href = '/';
+          } else {
+            alert(msg);
+          }
+        },
+      });
+    }
   }
 
   function edit_post() {
