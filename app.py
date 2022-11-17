@@ -28,7 +28,6 @@ def article(id):
     user_info = login_join.check_login()
     result = user_info['result']
     articleId = id
-    print(articleId)
 
     if(user_info['result'] == 'success'):
         userId = user_info['id']
