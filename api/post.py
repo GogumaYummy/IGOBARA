@@ -10,12 +10,19 @@ db = client.dbsparta
 
 post_api = Blueprint("post", __name__, url_prefix="/api") # Blueprint("블루프린트 이름", __name__, url_prefix="/경로")로 새 블루프린트를 만듭니다.
 
-@post_api.route('/api/write', methods=["POST"]) #게시글 등록 
+@post_api.route('/write', methods=["POST"]) #게시글 등록 
 def write():
     
     title = request.form['title_give']
-
+    image = request.form['image_give']
     content = request.form['content_give']
-    print(title, content)
+    
+    doc = {
+        'title': title,
+        'image': image,
+        'content': content
+    }
 
-    return jsonify({'msg': '가입을 환영합니다!', 'state': 1})
+    db.articles.insert_one(doc)
+
+    return jsonify({'msg': '작성 완료!', 'state': 1})

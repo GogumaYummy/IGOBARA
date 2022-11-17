@@ -47,16 +47,17 @@
 
     <script>
       function posting() {
-        let title = $("#title").val();
-        let image = $("#image").val();
-        let content = $("#content").val();
+        let title = $('#title').val();
+        let image = $('#image').val();
+        let content = $('#content').val();
 
         $.ajax({
-          type: "POST",
-          url: "/api/upload",
+          type: 'POST',
+          url: '/api/write',
           data: { title_give: title, image_give: image, content_give: content },
           success: function (response) {
-            alert(response["msg"]);
+            alert(response['msg']);
+            location.href = '/';
           },
         });
       }
@@ -65,31 +66,26 @@
   <body>
     <div class="mypost">
       <div class="form-floating mb-3">
-        <input
-          type="text"
-          class="form-control"
-          id="title"
-          placeholder="제목을 입력하세요"
-        />
-        <label for="title">제목을 입력하세요</label>
+        <input type="text" class="form-control" id="title" placeholder="제목" />
+        <label for="title">제목</label>
       </div>
       <div class="form-floating mb-3">
         <input
           type="text"
           class="form-control"
           id="image"
-          placeholder="URL을 입력하세요"
+          placeholder="이미지 URL"
         />
-        <label for="image">URL을 입력하세요</label>
+        <label for="image">이미지 URL</label>
       </div>
       <div class="form-floating">
         <textarea
           class="form-control"
           id="content"
           style="height: 100px"
-          placeholder="내용을 입력하세요"
+          placeholder="내용"
         ></textarea>
-        <label for="content">내용을 입력하세요</label>
+        <label for="content">내용</label>
       </div>
       <div class="mybtns">
         <button onclick="posting()" type="button" class="btn btn-dark">
