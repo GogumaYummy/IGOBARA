@@ -130,7 +130,26 @@
       url: `/api/article/${id}`,
       data: {},
       success: function (response) {
-        const { title, content, image } = response.result;
+        const { title, content, image, postedBy } = response.result;
+
+        const userId = '{{ userId }}';
+
+        console.log(postedBy, userId);
+
+        const buttons =
+          userId === postedBy
+            ? `<div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-info fix">수정</button>
+            <button
+              type="button"
+              onclick="delete_post()"
+              id="delete_btn"
+              class="btn btn-dark dark"
+            >
+              삭제
+            </button>
+          </div>`
+            : '';
 
         const temp_html = `
         <div class="col-lg-5 col-md-5 col-sm-6">
@@ -149,17 +168,7 @@
             <h4 class="box-title mt-2">${title}</h4>
             <p>${content}</p>
           </div>
-          <div class="d-flex justify-content-end">
-            <button type="button" class="btn btn-info fix">수정</button>
-            <button
-              type="button"
-              onclick="delete_post()"
-              id="delete_btn"
-              class="btn btn-dark dark"
-            >
-              삭제
-            </button>
-          </div>
+          ${buttons}
         </div>
         `;
 

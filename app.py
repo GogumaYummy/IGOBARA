@@ -34,7 +34,7 @@ def article(id):
         userId = user_info['id']
         nick = user_info['nick']
 
-        return render_template('post.html', result = result, userI= userId, nick = nick, articleId = articleId)
+        return render_template('post.html', result = result, userId = userId, nick = nick, articleId = articleId)
     else:
         msg = user_info['msg']
 
