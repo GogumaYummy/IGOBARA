@@ -24,6 +24,10 @@
 <script>
   const id = '{{ articleId }}';
 
+  $(document).ready(() => {
+    autofill();
+  });
+
   function editing() {
     const title = $('#title').val();
     const image = $('#image').val();
@@ -49,6 +53,21 @@
       success: function (response) {
         alert(response['msg']);
         location.href = '/';
+      },
+    });
+  }
+
+  function autofill() {
+    $.ajax({
+      type: 'GET',
+      url: `/api/article/${id}`,
+      data: {},
+      success: function (response) {
+        const { title, image, content } = response.result;
+
+        $('#title').val(title);
+        $('#image').val(image);
+        $('#content').val(content);
       },
     });
   }
