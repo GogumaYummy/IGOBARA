@@ -15,6 +15,13 @@
       crossorigin="anonymous"
     ></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <script>
+      function logout() {
+        $.removeCookie('mytoken');
+        window.location.href = '/';
+      }
+    </script>
     <title>이고바라</title>
     {% block head %}{% endblock %}
   </head>
@@ -30,14 +37,14 @@
             {% if result == 'success' %}
             <span class="navbar-text mx-4">{{nick}} 님, 환영합니다.</span>
             <li class="nav-item">
-              <a class="nav-link" href="write">글 작성</a>
+              <a class="nav-link" href="/write">글 작성</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="logout">로그아웃</a>
+              <a class="nav-link" href="" onclick="logout()">로그아웃</a>
             </li>
             {% else %}
             <li class="nav-item">
-              <a class="nav-link" href="login">로그인</a>
+              <a class="nav-link" href="/login">로그인</a>
             </li>
             {% endif%}
           </ul>
