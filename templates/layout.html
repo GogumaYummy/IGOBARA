@@ -18,7 +18,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
     <script>
       function logout() {
-        $.removeCookie('mytoken');
+        $.removeCookie('mytoken', { path: '/' });
         window.location.href = '/';
       }
     </script>
@@ -40,7 +40,7 @@
               <a class="nav-link" href="/write">글 작성</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="" onclick="logout()">로그아웃</a>
+              <a class="nav-link" href="#" onclick="logout()">로그아웃</a>
             </li>
             {% else %}
             <li class="nav-item">

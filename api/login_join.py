@@ -1,12 +1,9 @@
 from flask import request, jsonify, Blueprint
-from pymongo import MongoClient
-import certifi, jwt, datetime, hashlib
+import jwt, datetime, hashlib
+from config import pymongo
 # 여기서 사용한 패키지는 app.py에서 다시 불러올 필요가 없습니다.
 
-ca = certifi.where()
-
-client = MongoClient('mongodb+srv://igobara:221114@cluster0.pmylkqu.mongodb.net/?retryWrites=true&w=majority', tlsCAFile=ca)
-db = client.dbsparta
+post_api = Blueprint("post", __name__, url_prefix="/api")
 
 SECRET_KEY = 'IGO_BARA' #JWT토큰 생성시 필요
 
@@ -18,7 +15,7 @@ def idcheck():
 
     if(id_receive.strip() == ''): return jsonify({'msg': '공백을 아이디로 사용할 수 없습니다.', 'state': 0})
 
-    user = db.users.find_one({'id': id_receive})
+    user = pymongo.db.users.find_one({'id': id_receive})
 
     if(user != None): return jsonify({'msg': '이미 사용 중인 아이디입니다.', 'state': 0})
     else: return jsonify({'msg': '사용 가능한 아이디입니다.', 'state': 1})
@@ -29,7 +26,7 @@ def nickcheck():
 
     if(nick_receive == ''): return jsonify({'msg': '공백을 닉네임으로 사용할 수 없습니다.', 'state': 0})
 
-    user = db.users.find_one({'nick': nick_receive})
+    user = pymongo.db.users.find_one({'nick': nick_receive})
     
     if(user != None): return jsonify({'msg': '이미 사용 중인 닉네임입니다.', 'state': 0})
     else: return jsonify({'msg': '사용 가능한 닉네임입니다.', 'state': 1})
@@ -49,10 +46,10 @@ def join():
     if(pw_receive != pwc_receive):
         return jsonify({'msg': '비밀번호와 비밀번호 재확인이 일치하지 않습니다.', 'state': 0})
 
-    user = db.users.find_one({'id': id_receive})
+    user = pymongo.db.users.find_one({'id': id_receive})
     if(user != None): return jsonify({'msg': '이미 사용 중인 닉네임입니다.', 'state': 0})
 
-    user = db.users.find_one({'nick': nick_receive})
+    user = pymongo.db.users.find_one({'nick': nick_receive})
     if(user != None): return jsonify({'msg': '이미 사용 중인 닉네임입니다.', 'state': 0})
 
     pw_hash = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest()
@@ -62,7 +59,7 @@ def join():
         'pw': pw_hash,
         'nick': nick_receive
     }
-    db.users.insert_one(doc)
+    pymongo.db.users.insert_one(doc)
 
     return jsonify({'msg': '가입을 환영합니다!', 'state': 1})
 
@@ -73,7 +70,7 @@ def login():
 
     pw_hash = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest()
 
-    result = db.users.find_one({'id': id_receive, 'pw': pw_hash})
+    result = pymongo.db.users.find_one({'id': id_receive, 'pw': pw_hash})
 
     if result is not None:
         payload = {

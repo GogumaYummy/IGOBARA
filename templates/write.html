@@ -1,0 +1,91 @@
+{% extends "layout.html" %} {% block head %}
+<style>
+  .mypost {
+    width: 95%;
+    max-width: 500px;
+    margin: 10rem auto 0 auto;
+    padding: 20px;
+    box-shadow: 0 0 3px 0 gray;
+  }
+
+  .mybtns {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 20px;
+  }
+
+  .mybtns > button {
+    margin-right: 10px;
+  }
+</style>
+<script>
+  function posting() {
+    const title = $('#title').val();
+    const image = $('#image').val();
+    const content = $('#content').val();
+    const urlRegex = /(http)?s?:?(\/\/[^"']*\.(?:png|jpg|jpeg|gif|png|svg))/;
+
+    if (!title || !content) {
+      alert('제목 또는 내용이 비어 있습니다!');
+      return;
+    } else if (!image.match(urlRegex)) {
+      alert('이미지 URL 형식이 잘못됐습니다!');
+      return;
+    }
+
+    $.ajax({
+      type: 'POST',
+      url: '/api/write',
+      data: {
+        title_give: title,
+        image_give: image,
+        content_give: content,
+      },
+      success: function (response) {
+        alert(response['msg']);
+        location.href = '/';
+      },
+    });
+  }
+</script>
+{% endblock %} {% block contents %}
+<div class="mypost">
+  <div class="form-floating mb-3">
+    <input type="text" class="form-control" id="title" placeholder="제목" />
+    <label for="title">제목</label>
+  </div>
+  <div class="form-floating mb-3">
+    <input
+      type="text"
+      class="form-control"
+      id="image"
+      placeholder="이미지 URL"
+    />
+    <label for="image">이미지 URL</label>
+  </div>
+  <div class="form-floating">
+    <textarea
+      class="form-control"
+      id="content"
+      style="height: 100px"
+      placeholder="내용"
+    ></textarea>
+    <label for="content">내용</label>
+  </div>
+  <div class="mybtns">
+    <button onclick="posting()" type="button" class="btn btn-dark">
+      기록하기
+    </button>
+    <button
+      type="button"
+      class="btn btn-outline-dark"
+      onclick="location.href = '/' "
+    >
+      닫기
+    </button>
+  </div>
+</div>
+{% endblock %}
