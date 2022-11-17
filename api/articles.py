@@ -69,7 +69,7 @@ def write():
 
     return jsonify({'msg': '작성 완료!', 'state': 1})
 
-@post_api.route('/article/<id>', methods=["PUT"]) #게시글 등록 
+@post_api.route('/article/<id>', methods=["PUT"]) # 게시글 수정
 def rewrite(id):
     user_data = login_join.check_login()
     user_id = user_data['id']
