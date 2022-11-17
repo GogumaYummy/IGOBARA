@@ -1,7 +1,86 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>ㅇㅇ</title>
-  </head>
-  <body></body>
-</html>
+{% extends "layout.html" %} {% block head %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/index.css') }}"
+/>
+<script>
+  let page = 1;
+  let maxPage = 2;
+
+  $(document).ready(() => {
+    listing(page);
+  });
+
+  function listing(page) {
+    $.ajax({
+      type: 'GET',
+      url: '/test/articles',
+      data: { page },
+      success: (res) => {
+        const articles = [...res.articles];
+        maxPage = res.max_page;
+
+        const listOfArticles = $('#listOfArticles');
+
+        articles.forEach((article) => {
+          const { postedByNick, postedBy, title, content, image, _id } =
+            article;
+
+          const tempHTML = `
+            <div class="col">
+              <div class="card">
+                <a href="/article/${_id}">
+                  <img
+                    src="${image}"
+                    class="card-img-top"
+                    alt="thumbnail"
+                  />
+                </a>
+                <div class="card-body">
+                  <h5 class="card-title">${title}</h5>
+                  <p class="card-text">
+                    ${
+                      content.length > 20
+                        ? content.slice(0, 20) + '...'
+                        : content
+                    }
+                  </p>
+                  <p class="card-text">
+                    ${postedByNick}(${postedBy})
+                  </p>
+                </div>
+              </div>
+            </div>
+          `;
+
+          listOfArticles.append(tempHTML);
+        });
+      },
+    });
+  }
+
+  setInterval(() => {
+    if (
+      $(window).scrollTop() >=
+        $(document).height() - $(window).height() - $(window).height() * 0.2 &&
+      page < maxPage
+    ) {
+      listing(++page);
+    }
+  }, 750);
+</script>
+{% endblock %} {% block contents %}
+<div class="main-wrap">
+  <div class="main-image">
+    <img src="{{ url_for('static', filename='img/main.png') }}" />
+  </div>
+  <div class="main-text">
+    <p class="fs-2 fw-semibold text-white">
+      당신의 기분을 사진 한 장으로 표현하세요.
+    </p>
+  </div>
+</div>
+<div class="body-wrap mx-auto p-4">
+  <div class="row row-cols-1 row-cols-md-3 g-4" id="listOfArticles"></div>
+</div>
+{% endblock %}

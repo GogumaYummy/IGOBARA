@@ -1,0 +1,36 @@
+{% extends "layout.html" %} {% block head %}
+<head>
+  <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+  <link href="/static/css/login.css" rel="stylesheet" />
+  <script defer src="/static/js/login.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+</head>
+{% endblock %} {% block contents %}
+<div class="pen-title">
+  <h1>이고바라</h1>
+</div>
+<!-- Form Module-->
+<div class="module form-module">
+  <div class="toggle"><i class="fa fa-times fa-pencil">회원가입</i></div>
+  <div class="form">
+    <h2>로그인 정보를 입력하세요.</h2>
+    <form>
+      <input type="text" placeholder="아이디" id="idInput" />
+      <input type="password" placeholder="비밀번호" id="pwInput" />
+      <button type="button" onclick="login()">로그인</button>
+    </form>
+  </div>
+  <div class="form">
+    <h2>이고바라에 가입해<br />당신의 순간을 보여주세요.</h2>
+    <form>
+      <input type="text" id="userid" placeholder="아이디" />
+      <button type="button" class="check_overlap" onclick="checkID()" >중복확인</button>
+      <input type="password" placeholder="비밀번호" id="pw" />
+      <input type="password" placeholder="비밀번호 재확인" id="pw_check" />
+      <input type="text" placeholder="닉네임" id="nickname" />
+      <button type="button" class="check_overlap" onclick="checkNick()">중복확인</button>
+      <button type="button" onclick="join()">회원가입</button>
+    </form>
+  </div>
+</div>
+{% endblock %}
